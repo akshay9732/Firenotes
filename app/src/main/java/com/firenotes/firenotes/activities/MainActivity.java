@@ -9,6 +9,15 @@ import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.firenotes.firenotes.R;
+import com.firenotes.firenotes.adapter.NotesAdapter;
+import com.firenotes.firenotes.models.Note;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,18 +29,43 @@ public class MainActivity extends AppCompatActivity {
     ListView lvNotes;
     @BindView(R.id.fabAdd)
     FloatingActionButton fabAdd;
+    NotesAdapter adapter;
+    ArrayList<Note> notes = new ArrayList<Note>();
+    DatabaseReference database = FirebaseDatabase.getInstance().getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        adapter = new NotesAdapter(this,R.layout.list_item_notes,notes);
     }
 
     @OnClick(R.id.fabAdd)
     public void onViewClicked() {
         Intent intent = new Intent(MainActivity.this, AddNotesActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        database.child("notes").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                notes = new ArrayList<>();
+                for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
+                    Note note = noteDataSnapshot.getValue(Note.class);
+                    notes.add(note);
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override

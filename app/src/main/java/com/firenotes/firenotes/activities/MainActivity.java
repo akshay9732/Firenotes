@@ -39,20 +39,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         adapter = new NotesAdapter(this,R.layout.list_item_notes,notes);
-    }
+        lvNotes.setAdapter(adapter);
 
-    @OnClick(R.id.fabAdd)
-    public void onViewClicked() {
-        Intent intent = new Intent(MainActivity.this, AddNotesActivity.class);
-        startActivity(intent);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
         database.child("notes").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                notes.clear();
                 for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
                     Note note = noteDataSnapshot.getValue(Note.class);
                     notes.add(note);
@@ -65,6 +57,12 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @OnClick(R.id.fabAdd)
+    public void onViewClicked() {
+        Intent intent = new Intent(MainActivity.this, AddNotesActivity.class);
+        startActivity(intent);
     }
 
     @Override

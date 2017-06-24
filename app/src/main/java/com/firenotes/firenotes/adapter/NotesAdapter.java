@@ -41,9 +41,10 @@ public class NotesAdapter extends ArrayAdapter<Note> {
         }
 
         holder.tvShortNote.setText(getItem(position).getNote());
-        holder.tvDate.setText(getContext().getString(R.string.last_edited_on)+" "+getItem(position).getDate());
+        holder.tvDate.setText(getItem(position).getDate());
         return convertView;
     }
+
 
     static class ViewHolder {
         @BindView(R.id.ivNote)

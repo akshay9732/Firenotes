@@ -45,6 +45,7 @@ public class AddNotesActivity extends AppCompatActivity {
                 note.setNote(etNote.getText().toString());
                 note.setDate(Helper.getCurrentDate());
                 database.child("notes").child(token).setValue(note);
+                finish();
             }
         });
     }

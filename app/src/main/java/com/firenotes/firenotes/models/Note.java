@@ -10,11 +10,19 @@ import android.os.Parcelable;
 public class Note implements Parcelable {
     String note;
     String date;
-
+    String uID;
 
     public Note(String note, String date) {
         this.note = note;
         this.date = date;
+    }
+
+    public String getUid() {
+        return uID;
+    }
+
+    public void setUid(String uID) {
+        this.uID = uID;
     }
 
     public String getNote() {
@@ -43,6 +51,7 @@ public class Note implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.note);
         dest.writeString(this.date);
+        dest.writeString(this.uID);
     }
 
     public Note() {
@@ -51,6 +60,7 @@ public class Note implements Parcelable {
     protected Note(Parcel in) {
         this.note = in.readString();
         this.date = in.readString();
+        this.uID = in.readString();
     }
 
     public static final Parcelable.Creator<Note> CREATOR = new Parcelable.Creator<Note>() {

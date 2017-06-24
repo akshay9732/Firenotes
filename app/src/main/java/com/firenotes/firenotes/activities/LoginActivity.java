@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.firenotes.firenotes.R;
+import com.firenotes.firenotes.utils.AppSession;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -74,13 +75,14 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            //updateUI(user);
+                            AppSession.getSession().saveUserId(LoginActivity.this, user.getUid());
+                            finish();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-                            //updateUI(null);
+                            finish();
                         }
 
                         // ...
@@ -116,7 +118,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        //updateUI(currentUser);
+        finish();
     }
 
     @Override

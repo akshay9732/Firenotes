@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">FireNotes</string>
+    <string name="last_edited_on">Last edited on:</string>
 </resources>

@@ -41,10 +41,10 @@ public class AddNotesActivity extends AppCompatActivity {
                     return;
                 }
                 Note note = new Note();
-                note.setUid(database.child("notes").push().getKey());
+                String token =database.child("notes").push().getKey();
                 note.setNote(etNote.getText().toString());
                 note.setDate(Helper.getCurrentDate());
-                database.child("notes").child(note.getUid()).setValue(note);
+                database.child("notes").child(token).setValue(note);
             }
         });
     }

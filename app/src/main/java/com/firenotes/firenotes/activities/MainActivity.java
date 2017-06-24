@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
         database.child("notes").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                notes = new ArrayList<>();
                 for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
                     Note note = noteDataSnapshot.getValue(Note.class);
                     notes.add(note);

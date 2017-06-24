@@ -22,4 +22,8 @@ public class NotesDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_notes_detail);
         ButterKnife.bind(this);
     }
+
+    private void putValues(){
+
+    }
 }
